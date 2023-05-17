@@ -19,8 +19,29 @@
 	</c:otherwise>
 </c:choose>
 
+<h1> 자유 게시판 </h1>
 <br>
-제목 테이블, .......
+<table border="1">
+	<tr>
+		<td>글번호</td>
+		<td>제목</td>
+		<td>조회수</td>
+		<td>작성자</td>
+		<td>작성일</td>
+	</tr>
+	
+	<c:forEach items="${list}" var="map">
+		<tr>
+			<td>${map.boardDto.id}</td>
+			<!--  <td><a href="./${map.boardDto.id}">${map.boardDto.title}</a></td>-->
+			<td><a href="./readContentPage?id=${map.boardDto.id}">${map.boardDto.title}</a></td>			
+			<td>${map.boardDto.read_count}</td>
+			<td>${map.memberDto.nickname}</td>
+			<td>${map.boardDto.reg_date}</td>
+		</tr>
+	</c:forEach>
+
+</table>
 <br>
 
 <c:if test="${!empty sessionUser}">

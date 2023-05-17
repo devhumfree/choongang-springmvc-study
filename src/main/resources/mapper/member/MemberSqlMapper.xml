@@ -3,6 +3,11 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ja.finalproject.member.mapper.MemberSqlMapper">
+
+	<select id="selectById" resultType="com.ja.finalproject.dto.MemberDto">
+		select * from fp_member where id = #{id}
+	</select>
+	
 	<!-- MemberSqlMapper와 맵핑시킹  -->
 	<insert id="insert">
 		INSERT INTO fp_member VALUES(
