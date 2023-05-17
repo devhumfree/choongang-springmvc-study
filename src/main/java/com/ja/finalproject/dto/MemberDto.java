@@ -90,5 +90,4 @@ public class MemberDto {
 		this.reg_date = reg_date;
 	}
 	
-	
 }

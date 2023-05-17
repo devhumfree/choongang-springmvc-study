@@ -23,7 +23,5 @@
 
 <a href="./loginPage">로그인 페이지로</a>
 
-
-
 </body>
 </html>
