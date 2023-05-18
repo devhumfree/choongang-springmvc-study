@@ -65,9 +65,17 @@ public class BoardServiceImpl {
 		
 	}
 	
+	public void increaseReadCount(int id) {
+		boardSqlMapper.increaseReadCount(id);
+	}
 	
+	public void deleteContent(int id) {
+		boardSqlMapper.deleteById(id);
+	}
 	
-	
+	public void updateContent(BoardDto boardDto) {
+		boardSqlMapper.update(boardDto);
+	}
 	
 	
 	

@@ -3,6 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ja.finalproject.board.mapper.BoardSqlMapper">
+<!-- 오라클SQL 세미콜론(;)은 꼭 빼기!!!  -->
 	
 	<insert id="insert">
 		INSERT INTO fp_board VALUES(
@@ -26,5 +27,21 @@
 		FROM fp_board
 		WHERE id= #{id}
 	</select>
+	
+	<update id="increaseReadCount">
+		UPDATE fp_board
+		SET read_count = read_count + 1
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="deleteById">
+		DELETE FROM  fp_board WHERE id = #{id}
+	</delete>
+	
+	<update id="update">
+		UPDATE fp_board
+		SET title = #{title}, content = #{content}
+		WHERE id = #{id}
+	</update>
 	
 </mapper>

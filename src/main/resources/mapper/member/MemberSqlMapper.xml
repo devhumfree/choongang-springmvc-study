@@ -27,7 +27,7 @@
 	<select id="selectByUserIdAndPw" resultType="com.ja.finalproject.dto.MemberDto">
 	SELECT * 
 	FROM fp_member
-	WHERE user_id = #{user_id} 
+	WHERE user_id = #{user_id}
 	AND user_pw= #{user_pw}
 	</select>
 	

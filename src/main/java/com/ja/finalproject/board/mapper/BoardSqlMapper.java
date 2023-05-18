@@ -9,6 +9,16 @@ public interface BoardSqlMapper {
 	public BoardDto selectById(int id);
 
 	public void insert(BoardDto boardDto);
+	
 	public List<BoardDto> selectAll();
+	
+	// 조회수 증가
+	public void increaseReadCount(int id);
+	
+	// 글 삭제
+	public void deleteById(int id);
+	
+	// 글 수정
+	public void update(BoardDto boardDto);
 	
 }

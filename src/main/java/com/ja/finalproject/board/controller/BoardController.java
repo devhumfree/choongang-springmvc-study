@@ -50,8 +50,10 @@ public class BoardController {
 		return "redirect:./mainPage";
 	}
 	
-	@RequestMapping("readContentPage")
+	@RequestMapping("readContentPage") //parameter
 	public String readContentPage(Model model, int id) {
+		
+		boardService.increaseReadCount(id);
 		
 		Map<String, Object> map = boardService.getBoard(id);
 		
@@ -60,16 +62,40 @@ public class BoardController {
 		return "board/readContentPage";
 	}
 	
-	@RequestMapping("{id}")
-	public String readContentPageForPathVariable(Model model, @PathVariable("id") int id) {
+//	@RequestMapping("{id}") //pathVariable
+//	public String readContentPageForPathVariable(Model model, @PathVariable("id") int id) {
+//		
+//		boardService.increaseReadCount(id);
+//		
+//		Map<String, Object> map = boardService.getBoard(id);	
+//		
+//		model.addAttribute("data", map);
+//		
+//		return "board/readContentPage";
+//	}
+	
+	@RequestMapping("deleteProcess")
+	public String deleteProcess(int id) {
 		
-		Map<String, Object> map = boardService.getBoard(id);	
+		boardService.deleteContent(id);
 		
-		model.addAttribute("data", map);
-		
-		return "board/readContentPage";
+		return "redirect:./mainPage";
 	}
 	
+	@RequestMapping("updatePage")
+	public String updatePage(Model model, int id) {
+		
+		Map<String, Object> map = boardService.getBoard(id);
+		model.addAttribute("data", map);
+		
+		return "board/updatePage";
+	}
 	
-	
+	@RequestMapping("updateContentProcess")
+	public String updateContentProcess(BoardDto boardDto) {
+		
+		boardService.updateContent(boardDto);
+		
+		return "redirect:./mainPage";
+	}
 }
