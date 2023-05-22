@@ -5,11 +5,13 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ja.finalproject.board.service.BoardServiceImpl;
 import com.ja.finalproject.dto.BoardDto;
@@ -23,11 +25,25 @@ public class BoardController {
 	private BoardServiceImpl boardService;
 	
 	@RequestMapping("mainPage")
-	public String mainPage(Model model) {
+	public String mainPage(Model model, @RequestParam(value = "page", defaultValue = "1") int page) {
 		
-		List<Map<String, Object>> list = boardService.getBoardList();
+		List<Map<String, Object>> list = boardService.getBoardList(page);
+		int boardCount = boardService.getBoardCount();
+		int totalPage = (int)Math.ceil(boardCount/10.0);
+		
+		int startPage = ((page-1)/5)*5 +1;
+		int endPage = ((page-1)/5+1)*5;
+		
+		if(endPage > totalPage) {
+			endPage = totalPage;
+		}
+		
 		
 		model.addAttribute("list", list); //request 객체에 담는다.
+		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("currentPage",page);
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
 		
 		return "board/mainPage";
 	}
@@ -57,6 +73,15 @@ public class BoardController {
 		
 		Map<String, Object> map = boardService.getBoard(id);
 		
+		//html escape
+		BoardDto boardDto = (BoardDto)map.get("boardDto");
+		String content = boardDto.getContent();
+		 content = StringEscapeUtils.escapeHtml4(content);
+		 content = content.replaceAll("\n", "<br>");
+		 boardDto.setContent(content);
+		 
+		 
+		 
 		model.addAttribute("data", map);
 		
 		return "board/readContentPage";

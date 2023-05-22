@@ -28,11 +28,11 @@ public class BoardServiceImpl {
 		
 	}
 	
-	public List<Map<String,Object>> getBoardList() {
+	public List<Map<String,Object>> getBoardList(int pageNum) {
 		
 		List<Map<String, Object>> list = new ArrayList<>();
 		
-		List<BoardDto> boardDtoList = boardSqlMapper.selectAll();
+		List<BoardDto> boardDtoList = boardSqlMapper.selectAll(pageNum);
 		
 		
 		for(BoardDto boardDto: boardDtoList) {
@@ -50,6 +50,11 @@ public class BoardServiceImpl {
 		}
 		return list;
 	}
+	
+	public int getBoardCount() {
+		return boardSqlMapper.getBoardCount();
+	}
+	
 	
 	public Map<String, Object> getBoard(int id) {
 		

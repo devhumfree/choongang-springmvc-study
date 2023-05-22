@@ -61,6 +61,41 @@
 		</div>
 		
 		<div class="row"><!-- 버튼 -->
+			<div class="col-6 mx-auto">
+				<nav aria-label="Page navigation example">
+				  <ul class="pagination mb-0">
+				  <c:choose>
+				  	<c:when test="${startPage <= 1}">
+				   		<li class="page-item disabled"><a class="page-link" href="./mainPage?page=${startPage-1}">&lt;</a></li>
+				  	</c:when>
+				  	<c:otherwise>
+				  		<li class="page-item"><a class="page-link" href="./mainPage?page=${startPage-1}">&lt;</a></li>
+				  	</c:otherwise>
+				  </c:choose>
+	
+				    <c:forEach begin="${startPage }" end="${endPage }" var="index">
+				    	<c:choose>
+				    		<c:when test="${index == currentPage }">
+				    			<li class="page-item active"><a class="page-link" href="./mainPage?page=${index }">${index}</a></li>
+				    		</c:when>
+				    		<c:otherwise>
+				    			<li class="page-item"><a class="page-link" href="./mainPage?page=${index }">${index}</a></li>
+				    		</c:otherwise>
+				    	</c:choose>
+				    </c:forEach>
+				    
+				    <c:choose>
+					    <c:when test="${endPage >= totalPage}">
+					   		<li class="page-item disabled"><a class="page-link" href="./mainPage?page=${endPage+1}">&gt;</a></li>
+					  	</c:when>
+					  	<c:otherwise>
+					  		<li class="page-item"><a class="page-link" href="./mainPage?page=${endPage+1}">&gt;</a></li>
+					  	</c:otherwise>
+				    </c:choose>
+				    
+				  </ul>
+				</nav>
+			</div>
 			<div class="col-2 ms-auto d-grid">
 				<c:if test="${!empty sessionUser }">
 					<a href="./writeContentPage" class="btn btn-primary">글쓰기</a>

@@ -9,8 +9,9 @@ public interface BoardSqlMapper {
 	public BoardDto selectById(int id);
 
 	public void insert(BoardDto boardDto);
-	
-	public List<BoardDto> selectAll();
+	public List<BoardDto> selectAll(int pageNum);
+//	public List<BoardDto> selectAll();
+	public int getBoardCount();
 	
 	// 조회수 증가
 	public void increaseReadCount(int id);

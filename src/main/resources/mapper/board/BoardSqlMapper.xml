@@ -17,9 +17,25 @@
 	</insert>
 	
 	<select id="selectAll" resultType="com.ja.finalproject.dto.BoardDto">
-		SELECT * 
+	<!--문자로 인지해라 <, >  -->
+		<![CDATA[
+		select t2.* from (
+		    select t1.*, rownum rnum from (
+		        select fb.* from fp_board fb
+		        order by id desc
+		    ) t1
+		)t2
+		where t2.rnum >=  ((#{pageNum}-1) * 10) +1 and t2.rnum <= #{pageNum} * 10
+		]]>
+		
+<!-- 		SELECT * 
 		FROM fp_board
-		ORDER BY id DESC
+		ORDER BY id DESC -->
+		
+	</select>
+	
+	<select id="getBoardCount" resultType="int">
+		select count(*) from fp_board
 	</select>
 	
 	<select id="selectById" resultType="com.ja.finalproject.dto.BoardDto">

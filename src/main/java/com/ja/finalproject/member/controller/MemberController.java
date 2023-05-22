@@ -1,11 +1,15 @@
 package com.ja.finalproject.member.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ja.finalproject.dto.HobbyCategoryDto;
 import com.ja.finalproject.dto.MemberDto;
 import com.ja.finalproject.member.service.MemberServiceImpl;
 
@@ -24,13 +28,19 @@ public class MemberController {
 	}
 	
 	@RequestMapping("registerPage")
-	public String registerPage() {
+	public String registerPage(Model model) {
+		
+		/*
+		 * List<HobbyCategoryDto> list = memberService.getHobbyList();
+		 * model.addAttribute("hobbyList", list);
+		 */
+		
+		model.addAttribute("hobbyList", memberService.getHobbyList());
 		return "member/registerPage";
 	}
 	
 	@RequestMapping("registerProcess")
-	public String registerProcess(MemberDto params) {
-		
+	public String registerProcess(MemberDto params, int[] hobby_id) {
 		// DB insert...
 		
 		// 3tear
@@ -41,7 +51,7 @@ public class MemberController {
 		System.out.println(params.getUser_pw());
 		System.out.println(params.getNickname());
 		
-		memberService.register(params);
+		memberService.register(params, hobby_id);
 		
 		return "member/registerComplete";
 //		포워딩 제이에스피

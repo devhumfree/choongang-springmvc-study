@@ -40,7 +40,7 @@
 				</div>
 				<div class="row mt-2">
 					<div class="col d-grid">
-						<a href="./regsterPage" class="btn btn-outline-primary">회원가입</a>
+						<a href="./registerPage" class="btn btn-outline-primary">회원가입</a>
 					</div>
 				</div>
 				</form>
