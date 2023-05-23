@@ -14,6 +14,12 @@
 작성자: ${data.memberDto.nickname} <br>
 작성일: ${data.boardDto.reg_date} <br>
 조회수: ${data.boardDto.read_count}<br>
+<br>
+<c:forEach items="${data.boardImageDtoList}" var="boardImageDto">
+	<img src="/uploadFiles/${boardImageDto.link}"><br>
+</c:forEach>
+
+
 내용: <br>
 ${data.boardDto.content}<br>
 

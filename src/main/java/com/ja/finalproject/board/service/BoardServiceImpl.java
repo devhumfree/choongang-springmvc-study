@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.ja.finalproject.board.mapper.BoardSqlMapper;
 import com.ja.finalproject.dto.BoardDto;
+import com.ja.finalproject.dto.BoardImageDto;
 import com.ja.finalproject.dto.MemberDto;
 import com.ja.finalproject.member.mapper.MemberSqlMapper;
 
@@ -21,18 +22,24 @@ public class BoardServiceImpl {
 	@Autowired
 	private MemberSqlMapper memberSqlMapper;
 
-	public void writeContent(BoardDto boardDto) {
+	public void writeContent(BoardDto boardDto, List<BoardImageDto> boardImageDtoList) {
+		int boardId = boardSqlMapper.createPk();
 		
+		boardDto.setId(boardId);
 		boardSqlMapper.insert(boardDto);
 		
+		for(BoardImageDto boardImageDto : boardImageDtoList) {
+			boardImageDto.setBoard_id(boardId);
+			boardSqlMapper.insertBoardImage(boardImageDto);
+		}
 		
 	}
 	
-	public List<Map<String,Object>> getBoardList(int pageNum) {
+	public List<Map<String,Object>> getBoardList(int pageNum, String searchType, String searchWord) {
 		
 		List<Map<String, Object>> list = new ArrayList<>();
 		
-		List<BoardDto> boardDtoList = boardSqlMapper.selectAll(pageNum);
+		List<BoardDto> boardDtoList = boardSqlMapper.selectAll(pageNum, searchType, searchWord);
 		
 		
 		for(BoardDto boardDto: boardDtoList) {
@@ -51,8 +58,8 @@ public class BoardServiceImpl {
 		return list;
 	}
 	
-	public int getBoardCount() {
-		return boardSqlMapper.getBoardCount();
+	public int getBoardCount(String searchType, String searchWord) {
+		return boardSqlMapper.getBoardCount(searchType, searchWord);
 	}
 	
 	
@@ -61,10 +68,14 @@ public class BoardServiceImpl {
 		Map<String, Object> map = new HashMap<>();
 		
 		BoardDto boardDto = boardSqlMapper.selectById(id);
+		
 		MemberDto memberDto = memberSqlMapper.selectById(boardDto.getMember_id());
+		
+		List<BoardImageDto> boardImageDtoList = boardSqlMapper.selectBoardImageByBoardId(id);
 		
 		map.put("memberDto", memberDto);
 		map.put("boardDto", boardDto);
+		map.put("boardImageDtoList", boardImageDtoList);
 		
 		return map;
 		

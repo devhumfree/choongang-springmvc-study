@@ -4,10 +4,15 @@
 
 <mapper namespace="com.ja.finalproject.board.mapper.BoardSqlMapper">
 <!-- 오라클SQL 세미콜론(;)은 꼭 빼기!!!  -->
+
+	<select id="createPk" resultType="int">
+		select fp_board_seq.nextval from dual
+	</select>
+	
 	
 	<insert id="insert">
 		INSERT INTO fp_board VALUES(
-		    fp_board_seq.nextval,
+		    #{id},
 		    #{member_id},
 		    #{title},
 		    #{content},
@@ -17,14 +22,33 @@
 	</insert>
 	
 	<select id="selectAll" resultType="com.ja.finalproject.dto.BoardDto">
-	<!--문자로 인지해라 <, >  -->
-		<![CDATA[
+	
 		select t2.* from (
-		    select t1.*, rownum rnum from (
-		        select fb.* from fp_board fb
-		        order by id desc
+		    select t1.*, ROWNUM rnum from (
+				select fb.* 
+				from fp_board fb
+				inner join fp_member fm on fm.id = fb.member_id
+				where 1=1
+				<if test="searchType != null and searchWord !=null">
+					<choose>
+						<when test="searchType == 'title'">
+							and fb.title like '%' || #{searchWord} || '%'
+						</when>
+						<when test="searchType == 'content'">
+							and fb.content like '%' || #{searchWord} || '%'
+						</when>
+						<when test="searchType == 'nickname'">
+							and fm.nickname like '%' || #{searchWord} || '%'
+						</when>
+					</choose>
+				</if>
+				order by fb.id DESC
+
+
 		    ) t1
 		)t2
+		<!--문자로 인지해라 <, >  -->
+		<![CDATA[
 		where t2.rnum >=  ((#{pageNum}-1) * 10) +1 and t2.rnum <= #{pageNum} * 10
 		]]>
 		
@@ -35,7 +59,22 @@
 	</select>
 	
 	<select id="getBoardCount" resultType="int">
-		select count(*) from fp_board
+		select count(*)
+		from fp_board fb 
+		inner join fp_member fm on fm.id = fb.member_id
+		<if test="searchType != null and searchWord !=null">
+					<choose>
+						<when test="searchType == 'title'">
+							and fb.title like '%' || #{searchWord} || '%'
+						</when>
+						<when test="searchType == 'content'">
+							and fb.content like '%' || #{searchWord} || '%'
+						</when>
+						<when test="searchType == 'nickname'">
+							and fm.nickname like '%' || #{searchWord} || '%'
+						</when>
+					</choose>
+				</if>
 	</select>
 	
 	<select id="selectById" resultType="com.ja.finalproject.dto.BoardDto">
@@ -60,4 +99,17 @@
 		WHERE id = #{id}
 	</update>
 	
+	<insert id="insertBoardImage">
+		insert into fp_board_image values(
+			fp_board_image_seq.nextval,
+			#{board_id},
+			#{original_filename},
+			#{link}
+		)
+	</insert>
+	
+	<select id="selectBoardImageByBoardId"  resultType="com.ja.finalproject.dto.BoardImageDto">
+		select * from fp_board_image
+		where board_id=#{boardId}
+	</select>
 </mapper>

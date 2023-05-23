@@ -16,22 +16,23 @@
 				<jsp:include page="../common/topNavi.jsp"></jsp:include>
 			</div>
 		</div>
-		<div class="row mt-3"><!-- 검색 -->
-			<div class="col-2">
-				<select class="form-select">
-					<option selected>제목</option>
-					<option>내용</option>
-					<option>작성자</option>
-				</select>				
+		<form action="./mainPage" method="get">
+			<div class="row mt-3"><!-- 검색 -->
+				<div class="col-2">
+					<select name="searchType" class="form-select">
+						<option value="title" selected>제목</option>
+						<option value="content">내용</option>
+						<option value="nickname">작성자</option>
+					</select>				
+				</div>
+				<div class="col-8">
+					<input name="searchWord" type="text" class="form-control">
+				</div>
+				<div class="col-2 d-grid">
+					<button class="btn btn-primary">검색</button>
+				</div>
 			</div>
-			<div class="col-8">
-				<input type="text" class="form-control">
-			</div>
-			<div class="col-2 d-grid">
-				<button class="btn btn-primary">검색</button>
-			</div>
-		</div>
-
+		</form>
 
 		<div class="row mt-2"><!-- 테이블 -->
 			<div class="col">
@@ -66,30 +67,30 @@
 				  <ul class="pagination mb-0">
 				  <c:choose>
 				  	<c:when test="${startPage <= 1}">
-				   		<li class="page-item disabled"><a class="page-link" href="./mainPage?page=${startPage-1}">&lt;</a></li>
+				   		<li class="page-item disabled"><a class="page-link" href="./mainPage?page=${startPage-1}${searchQueryString}">&lt;</a></li>
 				  	</c:when>
 				  	<c:otherwise>
-				  		<li class="page-item"><a class="page-link" href="./mainPage?page=${startPage-1}">&lt;</a></li>
+				  		<li class="page-item"><a class="page-link" href="./mainPage?page=${startPage-1}${searchQueryString}">&lt;</a></li>
 				  	</c:otherwise>
 				  </c:choose>
 	
 				    <c:forEach begin="${startPage }" end="${endPage }" var="index">
 				    	<c:choose>
 				    		<c:when test="${index == currentPage }">
-				    			<li class="page-item active"><a class="page-link" href="./mainPage?page=${index }">${index}</a></li>
+				    			<li class="page-item active"><a class="page-link" href="./mainPage?page=${index}${searchQueryString}">${index}</a></li>
 				    		</c:when>
 				    		<c:otherwise>
-				    			<li class="page-item"><a class="page-link" href="./mainPage?page=${index }">${index}</a></li>
+				    			<li class="page-item"><a class="page-link" href="./mainPage?page=${index}${searchQueryString}">${index}</a></li>
 				    		</c:otherwise>
 				    	</c:choose>
 				    </c:forEach>
 				    
 				    <c:choose>
 					    <c:when test="${endPage >= totalPage}">
-					   		<li class="page-item disabled"><a class="page-link" href="./mainPage?page=${endPage+1}">&gt;</a></li>
+					   		<li class="page-item disabled"><a class="page-link" href="./mainPage?page=${endPage+1}${searchQueryString}">&gt;</a></li>
 					  	</c:when>
 					  	<c:otherwise>
-					  		<li class="page-item"><a class="page-link" href="./mainPage?page=${endPage+1}">&gt;</a></li>
+					  		<li class="page-item"><a class="page-link" href="./mainPage?page=${endPage+1}${searchQueryString}">&gt;</a></li>
 					  	</c:otherwise>
 				    </c:choose>
 				    
@@ -104,8 +105,6 @@
 		</div>
 	
 	</div>
-
-
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
