@@ -16,6 +16,13 @@
 				<jsp:include page="../common/topNavi.jsp"></jsp:include>
 			</div>
 		</div>
+		
+		<div class="row">
+			<div class="col">
+				<img alt="" src="/finalproject/resources/img/s.png" class="img-fluid">
+			</div>
+		</div>
+		
 		<form action="./mainPage" method="get">
 			<div class="row mt-3"><!-- 검색 -->
 				<div class="col-2">

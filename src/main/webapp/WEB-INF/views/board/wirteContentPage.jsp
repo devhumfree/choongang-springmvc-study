@@ -20,6 +20,15 @@
 	<br>
 	<button>글 쓰기</button>
 </form> 
+<!-- 
+    category_id NUMBER,
+    seller_id NUMBER,
+    product_title VARCHAR2(80),
+    product_desc VARCHAR2(1000),
+    product_price NUMBER,
+    product_mainimg_link VARCHAR2(500),
+    product_sumquantity NUMBER,
+    product_reg_date DATE -->
 
 </body>
 </html>

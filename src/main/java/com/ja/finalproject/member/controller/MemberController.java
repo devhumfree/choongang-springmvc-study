@@ -77,8 +77,15 @@ public class MemberController {
 		
 		session.invalidate();
 		
-		
 		return "redirect:../board/mainPage";
+	}
+	
+	@RequestMapping("successMail")
+	public String SuccessMail(String key) {
+		
+		memberService.successMail(key);
+		
+		return "member/completeMailAuth";
 	}
 }
 

@@ -9,7 +9,6 @@
 		select fp_board_seq.nextval from dual
 	</select>
 	
-	
 	<insert id="insert">
 		INSERT INTO fp_board VALUES(
 		    #{id},
@@ -112,4 +111,69 @@
 		select * from fp_board_image
 		where board_id=#{boardId}
 	</select>
+	
+	<insert id="insertLike">
+		insert into fp_like
+		values (
+			fp_like_seq.nextval,
+			#{board_id},
+			#{member_id},
+			SYSDATE
+		)
+	</insert>
+	
+	<delete id="deleteLike">
+		delete from fp_like
+		where board_id = #{board_id}
+		and member_id = #{member_id}
+	</delete>
+
+	<select id="countMyLike" resultType="int">
+		select count(*) from fp_like
+		where board_id = #{board_id}
+		and member_id = #{member_id}
+	</select>
+	
+	<select id="countLikeByBoardId"  resultType="int">
+		select count(*) from fp_like
+		where board_id = #{board_id}
+	</select>
+	
+	<insert id="insertComment">
+		insert into fp_comment values(
+			fp_comment_seq.nextval,
+			#{board_id},
+			#{member_id},
+			#{comment_text},
+			SYSDATE
+		)
+	</insert>
+	
+	<delete id="deleteComment">
+		delete from fp_comment where id =#{id}
+	</delete>
+	
+	<update id="updateComment">
+		update fp_comment
+		set
+			comment_text = #{comment_text}
+		where
+			id = #{id}
+	</update>
+	
+	<select id="selectCommentAll" resultType="com.ja.finalproject.dto.CommentDto">
+		select * from fp_comment where board_id = #{boardId}
+		order by id DESC
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>

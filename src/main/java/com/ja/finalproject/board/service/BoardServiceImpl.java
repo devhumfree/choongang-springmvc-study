@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import com.ja.finalproject.board.mapper.BoardSqlMapper;
 import com.ja.finalproject.dto.BoardDto;
 import com.ja.finalproject.dto.BoardImageDto;
+import com.ja.finalproject.dto.BoardLikeDto;
+import com.ja.finalproject.dto.CommentDto;
 import com.ja.finalproject.dto.MemberDto;
 import com.ja.finalproject.member.mapper.MemberSqlMapper;
 
@@ -93,8 +95,47 @@ public class BoardServiceImpl {
 		boardSqlMapper.update(boardDto);
 	}
 	
+	public void toggleLike(BoardLikeDto boardLikeDto) {
+		
+		if(boardSqlMapper.countMyLike(boardLikeDto) > 0) {
+			boardSqlMapper.deleteLike(boardLikeDto);
+		} else {
+			boardSqlMapper.insertLike(boardLikeDto);
+		}
+	}
 	
+	public boolean isLiked(BoardLikeDto boardLikeDto) {
+		return boardSqlMapper.countMyLike(boardLikeDto) > 0;
+	}
 	
+	public int getTotalLike(int boardId) {
+		return boardSqlMapper.countLikeByBoardId(boardId);
+	}
 	
+	//댓글
+	public void registerComment (CommentDto commentDto) {
+		boardSqlMapper.insertComment(commentDto);
+	}
 	
+	public void deleteComment(int id) {
+		boardSqlMapper.deleteComment(id);
+	}
+	
+	public void updateComment(CommentDto commentDto) {
+		boardSqlMapper.updateComment(commentDto);
+	}
+	
+	public List<Map<String, Object>> getCommentList(int boardId) {
+		List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+		List<CommentDto> commentList = boardSqlMapper.selectCommentAll(boardId);
+		for(CommentDto commentDto :  commentList) {
+			MemberDto memberDto = memberSqlMapper.selectById(commentDto.getMember_id());
+			Map<String, Object> map = new HashMap<>();
+			map.put("memberDto", memberDto);
+			map.put("commentDto", commentDto);
+			list.add(map);
+		}
+			
+			return list;
+	}
 }

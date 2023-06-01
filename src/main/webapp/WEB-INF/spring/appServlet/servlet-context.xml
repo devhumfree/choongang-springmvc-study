@@ -27,6 +27,22 @@
 		<beans:property name="maxUploadSize" value="100000000"></beans:property>
 	</beans:bean>
 	
+	<!-- 인터셉터 -->
+	<interceptors>
+		<interceptor>
+			<!-- <mapping path="/**"/>
+			<exclude-mapping path="/board/mainPage"/> -->
+			
+			<!-- <mapping path="/**"/> -->
+			
+			<!--  <mapping path="/board/writeContentPage" />
+			<mapping path="/board/updateContentPage" /> -->
+			
+			<mapping path="/board/writeContentPage"/><mapping path="/board/writeContentProcess" />
+		 	<mapping path="/board/updatePage" /><mapping path="/board/updateContentProcess" /> 
+			<beans:bean class="com.ja.finalproject.interceptor.SessionInterceptor"></beans:bean>
+		</interceptor>
+	</interceptors>
 	<!-- ja: 아래 패키지명 바꿀것 -->
 	<context:component-scan base-package="com.ja.finalproject.*.controller" />
 	

@@ -3,6 +3,7 @@ package com.ja.finalproject.member.mapper;
 import java.util.List;
 
 import com.ja.finalproject.dto.HobbyCategoryDto;
+import com.ja.finalproject.dto.MailAuthDto;
 import com.ja.finalproject.dto.MemberDto;
 import com.ja.finalproject.dto.MemberHobbyDto;
 
@@ -18,9 +19,15 @@ public interface MemberSqlMapper {
 		
 		public MemberDto selectById(int id); //#id
 		
+		public int countByUserId(String userId);
+		
 		//취미 관련
 		public List<HobbyCategoryDto> selectHobbyList();
 		//취미 등록
 		public void insertMemberHobby(MemberHobbyDto memberHobbyDto);
+		
+		// 메일 인증
+		public void insertMailAuth(MailAuthDto mailAuthDto);
+		public void updateCompleteYByKey(String key);
 		
 }

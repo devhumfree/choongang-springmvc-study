@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-로그인 실패, 아이디 혹은 비밀번호를 확인해주세요. 혹은 이메일 인증을 해야 합니다.<br>
-<a href="./loginPage">로그인 페이지</a>
+	접근 권한이 없습니다. <a href="../board/mainPage">메인페이지</a>
 </body>
 </html>

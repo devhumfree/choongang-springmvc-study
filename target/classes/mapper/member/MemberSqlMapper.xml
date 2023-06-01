@@ -30,10 +30,15 @@
 	
 	<!-- select는 꼭 resultType을 세팅 -->
 	<select id="selectByUserIdAndPw" resultType="com.ja.finalproject.dto.MemberDto">
-	SELECT * 
-	FROM fp_member
-	WHERE user_id = #{user_id}
-	AND user_pw= #{user_pw}
+	SELECT fm.* 
+	FROM fp_member fm inner join fp_mail_auth fma On fm.id = fma.member_id
+	WHERE fm.user_id = #{user_id}
+	AND fm.user_pw= #{user_pw}
+	AND fma.complete = 'Y'
+	</select>
+	
+	<select id="countByUserId" resultType="int">
+		SELECT COUNT(*) FROM fp_member WHERE user_id = #{userId}
 	</select>
 	
 	<!-- 취미 관련 -->
@@ -49,9 +54,24 @@
 		)
 	</insert>
 	
+	<insert id="insertMailAuth">
+		insert into fp_mail_auth values(
+			fp_mail_auth_seq.nextval,
+			#{member_id},
+			#{key},
+			'N',
+			null
+		)
+	</insert>
 	
-	
-	
+	<update id="updateCompleteYByKey">
+		update fp_mail_auth
+		set
+			complete = 'Y',
+			complete_date = SYSDATE
+		where 
+			key = #{key}
+	</update>
 	
 	
 	

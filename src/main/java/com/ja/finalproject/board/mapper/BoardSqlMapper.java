@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Param;
 
 import com.ja.finalproject.dto.BoardDto;
 import com.ja.finalproject.dto.BoardImageDto;
+import com.ja.finalproject.dto.BoardLikeDto;
+import com.ja.finalproject.dto.CommentDto;
 
 public interface BoardSqlMapper {
 	
@@ -34,6 +36,16 @@ public interface BoardSqlMapper {
 	// 이미지 불러오기
 	public List<BoardImageDto> selectBoardImageByBoardId(int boardId);
 	
+	// 좋아요
+	public void insertLike(BoardLikeDto boardLikeDto);
+	public void deleteLike(BoardLikeDto boardLikeDto);
+	public int countMyLike(BoardLikeDto boardLikeDto);
+	public int countLikeByBoardId(int boardId);
 	
+	// 댓글
+	public void insertComment(CommentDto commentDto);
+	public void deleteComment(int id);
+	public void updateComment(CommentDto commentDto);
+	public List<CommentDto> selectCommentAll(int boardId);
 	
 }
